@@ -61,7 +61,8 @@ var engineerQuestions = [
   {
     type: "input",
     message: "What is your employee's name?",
-    name: "name"
+    name: "name",
+    // validate: validateAnswer(input)
   },
   {
     type: "input",
@@ -103,6 +104,7 @@ function createManager(){
     const manager = new Manager (data.name, data.id, data.email, data.officenumber)
     console.log(data);
     myTeam.push(manager);
+    validateAnswer(data.name);
     nextRole();
   }) 
 };
@@ -146,6 +148,13 @@ function nextRole(){
 
 function createTeam(){
   fs.writeFileSync(outputPath, render(myTeam), "utf-8");
+}
+
+const validateAnswer = async (answer) => {
+  if (answer===" "){
+    return "You must enter something in this field to move forward"
+  }
+  return true;
 }
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
