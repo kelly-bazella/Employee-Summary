@@ -1,6 +1,18 @@
 # Employee-Summary
 
-This application is a team summary generator. Using a CLI, the user can input their teams information and it will create a readable profile page with all employees and key information about each team member. 
+This application is a team summary generator. Using a CLI, the user can input their teams information and it will create a readable profile page with key information about each team member. 
+
+# User Story
+
+As a manager
+I can enter in information about myself and my team
+So I can get a readable profile page with all my teams information 
+I can enter pertinent information about each of my employees depending on which role they are in
+If I choose engineer, I can enter their github
+If I choose intern, I can enter their school name
 
 # GIF
+
 ![](test-trial.gif)
+
+![](app-demo.gif)
