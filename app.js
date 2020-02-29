@@ -4,8 +4,8 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.resolve(__dirname, "output", "team.html");
 
 const render = require("./lib/htmlRenderer");
 
@@ -25,7 +25,7 @@ var managerQuestions = [
   {
     type: "number",
     message: "What is your ID number?",
-    name: "idnumber"
+    name: "id"
   },
   {
     type: "number",
@@ -38,22 +38,22 @@ var internQuestions = [
   {
     type: "input",
     message: "What is your employee's name?",
-    name: "employeename"
+    name: "name"
   },
   {
     type: "input",
     message: "What is your employee's email?",
-    name: "employeeemail"
+    name: "email"
   },
   {
     type: "number",
     message: "What is your employee's ID number?",
-    name: "employeeId"
+    name: "id"
   },
   {
     type: "input",
     message: "What school do you go to?",
-    name: "internSchool"
+    name: "school"
   }
 ];
 
@@ -61,22 +61,22 @@ var engineerQuestions = [
   {
     type: "input",
     message: "What is your employee's name?",
-    name: "employeename"
+    name: "name"
   },
   {
     type: "input",
     message: "What is your employee's email?",
-    name: "employeeemail"
+    name: "email"
   },
   {
     type: "number",
     message: "What is your employee's ID number?",
-    name: "employeeId"
+    name: "id"
   },
   {
     type: "input",
     message: "What is your GitHub username?",
-    name: "engineerGithub"
+    name: "github"
   }
 ];
 
@@ -100,28 +100,29 @@ createManager();
 
 function createManager(){
   inquirer.prompt(managerQuestions).then(function(data) {
+    const manager = new Manager (data.name, data.id, data.email, data.officenumber)
     console.log(data);
-    myTeam.push(data);
+    myTeam.push(manager);
     nextRole();
   }) 
 };
 
 function createIntern(){
   inquirer.prompt(internQuestions).then(function(answers){
-    myTeam.push(answers)
+    const intern = new Intern (answers.name, answers.id, answers.email, answers.school)
+    myTeam.push(intern)
     console.log(answers)
+    nextRole();
   })
 }
 
 function createEngineer(){
   inquirer.prompt(engineerQuestions).then(function(answers){
-    myTeam.push(answers)
+    const engineer= new Engineer(answers.name, answers.id, answers.email, answers.github)
+    myTeam.push(engineer)
     console.log(answers)
+    nextRole();
   })
-}
-
-function createTeam(){
-  console.log("Your team is being created!")
 }
 
 function nextRole(){
@@ -143,11 +144,9 @@ function nextRole(){
   })
 }
 
-// switch case to ask the employee questions depending on role chosen
-
-
-
-
+function createTeam(){
+  fs.writeFileSync(outputPath, render(myTeam), "utf-8");
+}
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 // After the user has input all employees desired, call the `render` function (required
