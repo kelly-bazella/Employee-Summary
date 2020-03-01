@@ -20,3 +20,5 @@ If I choose intern, I can enter their school name
 ![](test-trial.gif)
 
 ![](app-demo.gif)
+
+![Screenshot](example.png) 
